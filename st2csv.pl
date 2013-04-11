@@ -2,7 +2,7 @@
 # made by vikings
 # may it corrupt all yer data arrr
 #
-# usage ./foolsparser.pl (filename)-out.st2 (residuename)
+# usage ./st2csv.pl (filename)-out.st2 (residuename)
 
 use strict;
 use warnings;
