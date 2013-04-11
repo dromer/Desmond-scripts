@@ -26,7 +26,7 @@ my $data = 0;
 while ( $data <= $#file_ar ) {
     
     my $iter = natatime(2, @ligand);
-    my $res = shift($file_ar[$data]);
+    my $res = shift(@{$file_ar[$data]});
     my $file_out = $sim.'-'.$res.'.st2';
     
     open(my $fh, '>', $file_out) or die "Could not open file '$file_out' $!";
