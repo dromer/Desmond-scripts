@@ -21,11 +21,11 @@ my $file_out = $ARGV[1].'.csv';
 open(my $fh, '>', $file_out) or die "Could not open file '$file_out' $!";
 
 while(<FD>) {
-	#print($_);
+#	print($_);
 	my($tmpl) = $_;
 	chomp($tmpl);
 
-	#print "$tmpl \n";
+#	print "$tmpl \n";
 	if ($tmpl =~ /Distance/) { 
 #		print "found a new block\n";
 		if($newblock == 0) {
@@ -46,13 +46,13 @@ while(<FD>) {
 	}
 	
 	if($tmpl =~ /Result/) {
-		#my $char=chop($tmpl);
-		#print("chopped char: $char\n");
+#		my $char=chop($tmpl);
+#		print("chopped char: $char\n");
 		$tmpl =~ s/Result = \[//;
 		$tmpl =~ s/^\s+//;
 		$tmpl =~ s/\s+$//;
 		$tmpl =~ s/]//;
-		#print "template:$tmpl \n";
+#		print "template:$tmpl \n";
 
 		my @result = split(/ /,$tmpl);
 		foreach my $column (@result) {
@@ -91,7 +91,7 @@ for (my $i=0;$i<$row;$i++) {
 	$t = @{$storearray[$i]};
 	$runs = $runs +	$t;
 	my $num = (@storearray-1);
-	#print "$i e loop $t , totaal: $runs \n";
+#	print "$i e loop $t , totaal: $runs \n";
 }
 $runs /= @storearray;
 
