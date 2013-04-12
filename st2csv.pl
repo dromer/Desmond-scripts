@@ -12,10 +12,8 @@ open(FD, "<$ARGV[0]");
 my @names = ();
 my %columns = ();
 my @storearray;
-my $result = [];
 
 my $newblock = 0;
-my $colnum =1;
 my $bracknum = 0;
 my $row = 0;
 
@@ -40,7 +38,7 @@ while(<FD>) {
 	
 	if (($newblock == 1) && ($tmpl =~ /Name/)) {
 #		print "start of new block found\n";
-		$tmpl =~ s/Name = "//;  
+		$tmpl =~ s/Name = "//;
 		$tmpl =~ s/"//;
 		$tmpl =~ s/^\s+//;
 		#print("Entry Name: $tmpl\n");
@@ -48,7 +46,6 @@ while(<FD>) {
 	}
 	
 	if($tmpl =~ /Result/) {
-		$result = [];
 		#my $char=chop($tmpl);
 		#print("chopped char: $char\n");
 		$tmpl =~ s/Result = \[//;
@@ -69,7 +66,6 @@ while(<FD>) {
 	}elsif(($tmpl =~ /}/) && ($bracknum == 1)) {
 		$newblock = 0;
 		$bracknum = 0;
-		$colnum++;
 #		print("end of block\n\n");
 	}elsif ($bracknum >1) {
 		print "wtf? exiting...\n";
