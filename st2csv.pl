@@ -10,7 +10,6 @@ use POSIX;
 
 open(FD, "<$ARGV[0]");
 my @names = ();
-my %columns = ();
 my @storearray;
 
 my $newblock = 0;
@@ -53,10 +52,9 @@ while(<FD>) {
 		$tmpl =~ s/\s+$//;
 		$tmpl =~ s/]//;
 #		print "template:$tmpl \n";
-
 		my @result = split(/ /,$tmpl);
 		foreach my $column (@result) {
-			push @{$storearray[$row]}, $column;
+			push(@{$storearray[$row]}, $column);
 		}
 		$row++;
 	}
