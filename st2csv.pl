@@ -9,10 +9,8 @@ use warnings;
 use POSIX;
 
 open(FD, "<$ARGV[0]");
-
 my @names = ();
 my %columns = ();
-
 my @storearray;
 my $result = [];
 
@@ -22,11 +20,9 @@ my $bracknum = 0;
 my $row = 0;
 
 my $file_out = $ARGV[1].'.csv';
-
 open(my $fh, '>', $file_out) or die "Could not open file '$file_out' $!";
 
 while(<FD>) {
- 
 	#print($_);
 	my($tmpl) = $_;
 	chomp($tmpl);
@@ -53,14 +49,12 @@ while(<FD>) {
 	
 	if($tmpl =~ /Result/) {
 		$result = [];
-        #my $char=chop($tmpl);
-        #print("chopped char: $char\n");
-		
+		#my $char=chop($tmpl);
+		#print("chopped char: $char\n");
 		$tmpl =~ s/Result = \[//;
 		$tmpl =~ s/^\s+//;
 		$tmpl =~ s/\s+$//;
 		$tmpl =~ s/]//;
-		
 		#print "template:$tmpl \n";
 
 		my @result = split(/ /,$tmpl);
@@ -69,7 +63,7 @@ while(<FD>) {
 		}
 		$row++;
 	}
-	
+
 	if( ($tmpl =~ /}/) && ($bracknum == 0)) {
 		$bracknum++;
 	}elsif(($tmpl =~ /}/) && ($bracknum == 1)) {
@@ -80,8 +74,7 @@ while(<FD>) {
 	}elsif ($bracknum >1) {
 		print "wtf? exiting...\n";
 		exit(2);
-	}
- 
+	} 
 }
 
 print $fh '#Simulation Analysis Results CSV File '.strftime("%F %T", localtime $^T)."\n";
@@ -95,12 +88,10 @@ print $fh "$line\n";
 
 my $floatnum=0.0;
 $line = "0.0";
-
 my $runs = 0;
 my $t = 0;
 
 for (my $i=0;$i<$row;$i++) {
-
 	$t = @{$storearray[$i]};
 	$runs = $runs +	$t;
 	my $num = (@storearray-1);
@@ -109,19 +100,15 @@ for (my $i=0;$i<$row;$i++) {
 $runs /= @storearray;
 
 for (my $i=0; $i<$runs; $i++) {
-	
 	print $fh $line;
-	
-	foreach $row (0..@storearray-1) {
-	
+
+    foreach $row (0..@storearray-1) {
 		print $fh ",$storearray[$row][$i]";
-		
 	}
 	$floatnum += 4.8;
 	my $rounded = sprintf("%.1f", $floatnum);
 	$line = "$rounded";
 	print $fh "\n";
-	
 }
 close $fh;
 print "Finished converting $ARGV[0] to $file_out \n";
